@@ -1,12 +1,13 @@
 body {
+	margin: 0;
 	font: 16px/1.5em arial, helvetica, sans-serif;
 	background: #757575;
 	color: #555;
 }
 #page {
 	border-radius: 2px;
-	margin: 5% auto;
-	padding: 1% 2%;
+	margin: 2rem auto;
+	padding: 0.5rem 1rem 2rem;
 	max-width: 800px;
 	background: #fff;
 }
