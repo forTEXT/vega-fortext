@@ -17,7 +17,7 @@
     },
     {
       "name": "radius",
-      "value": 280,
+      "value": 180,
       "bind": {
         "input": "range",
         "min": 20,
@@ -46,7 +46,7 @@
     },
     {
       "name": "textSize",
-      "value": 8,
+      "value": 14,
       "bind": {
         "input": "range",
         "min": 2,
