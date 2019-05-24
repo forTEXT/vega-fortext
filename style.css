@@ -1,0 +1,30 @@
+body {
+	font: 16px/1.5em arial, helvetica, sans-serif;
+	background: #757575;
+	color: #555;
+}
+#page {
+	border-radius: 2px;
+	margin: 5% auto;
+	padding: 1% 2%;
+	max-width: 800px;
+	background: #fff;
+}
+nav {
+	background: #eee;
+}
+nav ul {
+	margin: 0;
+	padding: 0.5rem;
+}
+nav li {
+	display: inline;
+	margin: 0.5rem;
+}
+nav a {
+	text-decoration: none;
+}
+nav a:focus,
+nav a:hover {
+	text-decoration: underline;
+}
