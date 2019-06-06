@@ -2,7 +2,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" type="text/css" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <!--<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>-->
+  <script src="https://vega.github.io/vega/vega.js"></script>
+  <script src="datamanagement.js"></script>
   <title>Vega / forTEXT: View API</title>
 </head>
 <body>
@@ -21,11 +23,20 @@
     var view;
 
     fetch('visualization-edge-bundling.vg.json')
-      .then(res => res.json())
-      .then(spec => render(spec))
-      .catch(err => console.error(err));
+		.then(res => res.json())
+		.then(spec => loadData(spec))
+		.catch(err => console.error(err));
 
-    function render(spec) {
+    function loadData(spec) {
+		fetch('data/json_articles_category.json')
+			.then(res => res.json())
+			.then(data => render(data, spec))
+			.catch(err => console.error(err));
+	}
+
+	function render(data, spec) {
+	  injectData(spec, data.results);
+	  
       view = new vega.View(vega.parse(spec), {
         renderer:  'canvas',  // renderer (canvas or svg)
         container: '#view',   // parent DOM container

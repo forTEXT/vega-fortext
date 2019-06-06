@@ -1,0 +1,36 @@
+
+
+one node per article
+
+articles
+=========
+
+name: node_title
+id: nid (maybe a mapping to generated ids 'a'+nid -> genId
+url: https://fortext.net/ + _field_data.nid.entity.path.alias
+parent:
+	Ressourcen
+		Textsammlungen
+		Tagsets
+	field_field_resource_category[0].raw.tid
+	field_field_resource_category[0].raw.taxonomy_term.name
+	
+	Routinen
+		Methoden
+		Lerneinheiten
+	field_field_routine_category
+	
+	Tools
+		Tools
+	field_field_tool_category
+	
+	
+root: forTEXT
+
+
+article relations
+==================
+
+source: source_nid
+target: target_nid
+_field_data.nid.entity.field_related_content.und[...{nid}...]

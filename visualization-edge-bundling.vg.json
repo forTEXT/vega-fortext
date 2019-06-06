@@ -1,13 +1,13 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "padding": 5,
-  "width": 720,
-  "height": 720,
+  "width": 820,
+  "height": 820,
   "autosize": "none",
   "signals": [
     {
       "name": "tension",
-      "value": 0.85,
+      "value": 0.7,
       "bind": {
         "input": "range",
         "min": 0,
@@ -17,7 +17,7 @@
     },
     {
       "name": "radius",
-      "value": 180,
+      "value": 100,
       "bind": {
         "input": "range",
         "min": 20,
@@ -165,7 +165,7 @@
       ]
     },
     {
-      "name": "dependencies",
+      "name": "relations",
       "url": "data/articles-dependencies.json",
       "transform": [
         {
@@ -178,7 +178,7 @@
     },
     {
       "name": "selected",
-      "source": "dependencies",
+      "source": "relations",
       "transform": [
         {
           "type": "filter",
@@ -262,7 +262,7 @@
       "from": {
         "facet": {
           "name": "path",
-          "data": "dependencies",
+          "data": "relations",
           "field": "treepath"
         }
       },
@@ -325,8 +325,8 @@
       "name": "color",
       "type": "ordinal",
       "domain": [
-        "depends on",
-        "imported by"
+        "ist verwandter Beitrag von",
+        "hat verwandten Beitrag"
       ],
       "range": [
         {
@@ -342,7 +342,7 @@
     {
       "stroke": "color",
       "orient": "bottom-right",
-      "title": "Dependencies",
+      "title": "Verwandte Beiträge",
       "symbolType": "stroke"
     }
   ]
