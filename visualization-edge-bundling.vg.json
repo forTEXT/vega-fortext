@@ -1,14 +1,15 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "padding": 5,
-  "width": 820,
+  "width": 790,
   "height": 820,
   "autosize": "none",
   "signals": [
     {
       "name": "tension",
       "value": 0.7,
-      "bind": {
+      "bind":
+      {
         "input": "range",
         "min": 0,
         "max": 1,
@@ -18,7 +19,8 @@
     {
       "name": "radius",
       "value": 100,
-      "bind": {
+      "bind":
+      {
         "input": "range",
         "min": 20,
         "max": 400
@@ -26,28 +28,17 @@
     },
     {
       "name": "extent",
-      "value": 360,
-      "bind": {
-        "input": "range",
-        "min": 0,
-        "max": 360,
-        "step": 1
-      }
+      "value": 360
     },
     {
       "name": "rotate",
-      "value": 0,
-      "bind": {
-        "input": "range",
-        "min": 0,
-        "max": 360,
-        "step": 1
-      }
+      "value": 0
     },
     {
       "name": "textSize",
-      "value": 14,
-      "bind": {
+      "value": 13,
+      "bind":
+      {
         "input": "range",
         "min": 2,
         "max": 20,
@@ -57,7 +48,8 @@
     {
       "name": "textOffset",
       "value": 2,
-      "bind": {
+      "bind":
+      {
         "input": "range",
         "min": 0,
         "max": 10,
@@ -66,14 +58,7 @@
     },
     {
       "name": "layout",
-      "value": "cluster",
-      "bind": {
-        "input": "radio",
-        "options": [
-          "tidy",
-          "cluster"
-        ]
-      }
+      "value": "cluster"
     },
     {
       "name": "colorIn",
@@ -104,6 +89,36 @@
           "update": "null"
         }
       ]
+    },
+    {
+      "name": "startAngle",
+      "value": 0
+    },
+    {
+      "name": "endAngle",
+      "value": 6.29
+    },
+    {
+      "name": "innerRadius",
+      "value": 98,
+      "bind":
+      {
+        "input": "range",
+        "min": 0,
+        "max": 395,
+        "step": 1
+      }
+    },
+    {
+      "name": "outerRadius",
+      "value": 390,
+      "bind":
+      {
+        "input": "range",
+        "min": 0,
+        "max": "400",
+        "step": 1
+      }
     }
   ],
   "data": [
@@ -118,7 +133,8 @@
         },
         {
           "type": "tree",
-          "method": {
+          "method":
+          {
             "signal": "layout"
           },
           "size": [
@@ -165,6 +181,32 @@
       ]
     },
     {
+      "name": "count_by_direct_categories",
+      "source": "tree",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.parent > 3"
+        },
+        {
+          "type": "aggregate",
+          "groupby": ["parentname"]
+        },
+        {
+          "type": "pie",
+          "field": "count",
+          "startAngle":
+          {
+            "signal": "startAngle"
+          },
+          "endAngle":
+          {
+            "signal": "endAngle"
+          }
+        }
+      ]
+    },
+    {
       "name": "relations",
       "url": "data/articles-dependencies.json",
       "transform": [
@@ -189,39 +231,109 @@
   ],
   "marks": [
     {
+      "type": "arc",
+      "from":
+      {
+        "data": "count_by_direct_categories"
+      },
+      "encode":
+      {
+        "enter":
+        {
+          "fill":
+          {
+            "scale": "cat_color",
+            "field": "parentname"
+          },
+          "x":
+          {
+            "signal": "width / 2"
+          },
+          "y":
+          {
+            "signal": "height / 2"
+          },
+          "fillOpacity":
+          {
+            "value": 0.6
+          },
+          "padAngle":
+          {
+            "value": 0.02
+          }
+        },
+        "update":
+        {
+          "startAngle":
+          {
+            "field": "startAngle"
+          },
+          "endAngle":
+          {
+            "field": "endAngle"
+          },
+          "innerRadius":
+          {
+            "signal": "innerRadius"
+          },
+          "outerRadius":
+          {
+            "signal": "outerRadius"
+          },
+          "cornerRadius":
+          {
+            "value": "0"
+          }
+        }
+      }
+    },
+    {
       "type": "text",
-      "from": {
+      "from":
+      {
         "data": "leaves"
       },
-      "encode": {
-        "enter": {
-          "text": {
+      "encode":
+      {
+        "enter":
+        {
+          "text":
+          {
             "field": "name"
           },
-          "baseline": {
+          "baseline":
+          {
             "value": "middle"
           },
-          "href": {
+          "href":
+          {
             "field": "url"
           }
         },
-        "update": {
-          "x": {
+        "update":
+        {
+          "x":
+          {
             "field": "x"
           },
-          "y": {
+          "y":
+          {
             "field": "y"
           },
-          "dx": {
+          "dx":
+          {
             "signal": "textOffset * (datum.leftside ? -1 : 1)"
           },
-          "angle": {
+          "angle":
+          {
             "signal": "datum.leftside ? datum.angle - 180 : datum.angle"
           },
-          "align": {
+          "align":
+          {
             "signal": "datum.leftside ? 'right' : 'left'"
           },
-          "fontSize": {
+          "fontSize":
+          {
             "signal": "textSize"
           },
           "fontWeight": [
@@ -259,8 +371,10 @@
     },
     {
       "type": "group",
-      "from": {
-        "facet": {
+      "from":
+      {
+        "facet":
+        {
           "name": "path",
           "data": "relations",
           "field": "treepath"
@@ -270,19 +384,25 @@
         {
           "type": "line",
           "interactive": false,
-          "from": {
+          "from":
+          {
             "data": "path"
           },
-          "encode": {
-            "enter": {
-              "interpolate": {
+          "encode":
+          {
+            "enter":
+            {
+              "interpolate":
+              {
                 "value": "bundle"
               },
-              "strokeWidth": {
+              "strokeWidth":
+              {
                 "value": 1.5
               }
             },
-            "update": {
+            "update":
+            {
               "stroke": [
                 {
                   "test": "parent.source === active",
@@ -305,13 +425,16 @@
                   "value": 0.2
                 }
               ],
-              "tension": {
+              "tension":
+              {
                 "signal": "tension"
               },
-              "x": {
+              "x":
+              {
                 "field": "x"
               },
-              "y": {
+              "y":
+              {
                 "field": "y"
               }
             }
@@ -336,6 +459,19 @@
           "signal": "colorOut"
         }
       ]
+    },
+    {
+      "name": "cat_color",
+      "type": "ordinal",
+      "domain":
+      {
+        "data": "count_by_direct_categories",
+        "field": "parentname"
+      },
+      "range":
+      {
+        "scheme": "set1"
+      }
     }
   ],
   "legends": [
@@ -344,6 +480,13 @@
       "orient": "bottom-right",
       "title": "Verwandte Beiträge",
       "symbolType": "stroke"
+    },
+    {
+      "stroke": "cat_color",
+      "orient": "bottom-left",
+      "title": "Kategorie",
+      "symbolType": "stroke",
+      "symbolOpacity": 0.6
     }
   ]
 }
