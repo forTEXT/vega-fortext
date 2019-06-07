@@ -8,7 +8,8 @@
     {
       "name": "tension",
       "value": 0.7,
-      "bind": {
+      "bind":
+      {
         "input": "range",
         "min": 0,
         "max": 1,
@@ -18,7 +19,8 @@
     {
       "name": "radius",
       "value": 100,
-      "bind": {
+      "bind":
+      {
         "input": "range",
         "min": 20,
         "max": 400
@@ -35,7 +37,8 @@
     {
       "name": "textSize",
       "value": 13,
-      "bind": {
+      "bind":
+      {
         "input": "range",
         "min": 2,
         "max": 20,
@@ -45,7 +48,8 @@
     {
       "name": "textOffset",
       "value": 2,
-      "bind": {
+      "bind":
+      {
         "input": "range",
         "min": 0,
         "max": 10,
@@ -87,18 +91,34 @@
       ]
     },
     {
-      "name": "startAngle", "value": 0
+      "name": "startAngle",
+      "value": 0
     },
     {
-      "name": "endAngle", "value": 6.29
+      "name": "endAngle",
+      "value": 6.29
     },
     {
-      "name": "innerRadius", "value": 98,
-      "bind": {"input": "range", "min": 0, "max": 395, "step": 1}
+      "name": "innerRadius",
+      "value": 98,
+      "bind":
+      {
+        "input": "range",
+        "min": 0,
+        "max": 395,
+        "step": 1
+      }
     },
     {
-      "name": "outerRadius", "value": 390,
-      "bind": {"input": "range", "min": 0, "max": "400", "step": 1}
+      "name": "outerRadius",
+      "value": 390,
+      "bind":
+      {
+        "input": "range",
+        "min": 0,
+        "max": "400",
+        "step": 1
+      }
     }
   ],
   "data": [
@@ -113,7 +133,8 @@
         },
         {
           "type": "tree",
-          "method": {
+          "method":
+          {
             "signal": "layout"
           },
           "size": [
@@ -159,23 +180,32 @@
         }
       ]
     },
-	{
-	  "name": "count_by_direct_categories",
-	  "source": "tree",
-	  "transform": [
-		{"type": "filter", "expr": "datum.parent > 3"},
-		{
-		  "type": "aggregate",
-		  "groupby": ["parentname"]
-		},
+    {
+      "name": "count_by_direct_categories",
+      "source": "tree",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.parent > 3"
+        },
+        {
+          "type": "aggregate",
+          "groupby": ["parentname"]
+        },
         {
           "type": "pie",
           "field": "count",
-          "startAngle": {"signal": "startAngle"},
-          "endAngle": {"signal": "endAngle"}
-        }		
-	  ]
-	},
+          "startAngle":
+          {
+            "signal": "startAngle"
+          },
+          "endAngle":
+          {
+            "signal": "endAngle"
+          }
+        }
+      ]
+    },
     {
       "name": "relations",
       "url": "data/articles-dependencies.json",
@@ -200,60 +230,110 @@
     }
   ],
   "marks": [
-	{
-	  "type": "arc",
-	  "from": {"data": "count_by_direct_categories"},
-	  "encode": {
-		  "enter": {
-			"fill": {"scale": "cat_color", "field": "parentname"},
-			"x": {"signal": "width / 2"},
-			"y": {"signal": "height / 2"},
-			"fillOpacity": {"value": 0.6},
-			"padAngle": {"value": 0.02}
-		  },
-		  "update": {
-			"startAngle": {"field": "startAngle"},
-			"endAngle": {"field": "endAngle"},
-			"innerRadius": {"signal": "innerRadius"},
-			"outerRadius": {"signal": "outerRadius"},
-			"cornerRadius": {"value": "0"}
-		  }
-	  }
-   },   
+    {
+      "type": "arc",
+      "from":
+      {
+        "data": "count_by_direct_categories"
+      },
+      "encode":
+      {
+        "enter":
+        {
+          "fill":
+          {
+            "scale": "cat_color",
+            "field": "parentname"
+          },
+          "x":
+          {
+            "signal": "width / 2"
+          },
+          "y":
+          {
+            "signal": "height / 2"
+          },
+          "fillOpacity":
+          {
+            "value": 0.6
+          },
+          "padAngle":
+          {
+            "value": 0.02
+          }
+        },
+        "update":
+        {
+          "startAngle":
+          {
+            "field": "startAngle"
+          },
+          "endAngle":
+          {
+            "field": "endAngle"
+          },
+          "innerRadius":
+          {
+            "signal": "innerRadius"
+          },
+          "outerRadius":
+          {
+            "signal": "outerRadius"
+          },
+          "cornerRadius":
+          {
+            "value": "0"
+          }
+        }
+      }
+    },
     {
       "type": "text",
-      "from": {
+      "from":
+      {
         "data": "leaves"
       },
-      "encode": {
-        "enter": {
-          "text": {
+      "encode":
+      {
+        "enter":
+        {
+          "text":
+          {
             "field": "name"
           },
-          "baseline": {
+          "baseline":
+          {
             "value": "middle"
           },
-          "href": {
+          "href":
+          {
             "field": "url"
           }
         },
-        "update": {
-          "x": {
+        "update":
+        {
+          "x":
+          {
             "field": "x"
           },
-          "y": {
+          "y":
+          {
             "field": "y"
           },
-          "dx": {
+          "dx":
+          {
             "signal": "textOffset * (datum.leftside ? -1 : 1)"
           },
-          "angle": {
+          "angle":
+          {
             "signal": "datum.leftside ? datum.angle - 180 : datum.angle"
           },
-          "align": {
+          "align":
+          {
             "signal": "datum.leftside ? 'right' : 'left'"
           },
-          "fontSize": {
+          "fontSize":
+          {
             "signal": "textSize"
           },
           "fontWeight": [
@@ -288,11 +368,13 @@
           ]
         }
       }
-    },  
-   {
+    },
+    {
       "type": "group",
-      "from": {
-        "facet": {
+      "from":
+      {
+        "facet":
+        {
           "name": "path",
           "data": "relations",
           "field": "treepath"
@@ -302,19 +384,25 @@
         {
           "type": "line",
           "interactive": false,
-          "from": {
+          "from":
+          {
             "data": "path"
           },
-          "encode": {
-            "enter": {
-              "interpolate": {
+          "encode":
+          {
+            "enter":
+            {
+              "interpolate":
+              {
                 "value": "bundle"
               },
-              "strokeWidth": {
+              "strokeWidth":
+              {
                 "value": 1.5
               }
             },
-            "update": {
+            "update":
+            {
               "stroke": [
                 {
                   "test": "parent.source === active",
@@ -337,13 +425,16 @@
                   "value": 0.2
                 }
               ],
-              "tension": {
+              "tension":
+              {
                 "signal": "tension"
               },
-              "x": {
+              "x":
+              {
                 "field": "x"
               },
-              "y": {
+              "y":
+              {
                 "field": "y"
               }
             }
@@ -372,9 +463,16 @@
     {
       "name": "cat_color",
       "type": "ordinal",
-      "domain": {"data": "count_by_direct_categories", "field": "parentname"},
-      "range": {"scheme": "set1"}
-    }	
+      "domain":
+      {
+        "data": "count_by_direct_categories",
+        "field": "parentname"
+      },
+      "range":
+      {
+        "scheme": "set1"
+      }
+    }
   ],
   "legends": [
     {
@@ -383,12 +481,12 @@
       "title": "Verwandte Beiträge",
       "symbolType": "stroke"
     },
-	{
-	  "stroke": "cat_color",
-	  "orient": "bottom-left",
-	  "title": "Kategorie",
-	  "symbolType": "stroke",
-  	  "symbolOpacity": 0.6
-	}
+    {
+      "stroke": "cat_color",
+      "orient": "bottom-left",
+      "title": "Kategorie",
+      "symbolType": "stroke",
+      "symbolOpacity": 0.6
+    }
   ]
 }
