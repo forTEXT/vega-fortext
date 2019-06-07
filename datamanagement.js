@@ -70,6 +70,7 @@ function injectData(vegaSpec, ftRawArticlesArray) {
 			}
 			
 			article.parent = vizIdProvider('t'+ftArticle.field_field_resource_category[0].raw.tid);
+			article.parentname = ftArticle.field_field_resource_category[0].raw.taxonomy_term.name;
 		}
 		else if (ftArticle.field_field_routine_category.length != 0) {
 			// add Routine's sub category if it hasn't been added yet
@@ -83,6 +84,7 @@ function injectData(vegaSpec, ftRawArticlesArray) {
 			}
 			
 			article.parent = vizIdProvider('t'+ftArticle.field_field_routine_category[0].raw.tid);		
+			article.parentname = ftArticle.field_field_routine_category[0].raw.taxonomy_term.name;
 		}
 		else if (ftArticle.field_field_tool_category.length != 0) {
 			// add Tool's sub category if it hasn't been added yet			
@@ -96,6 +98,7 @@ function injectData(vegaSpec, ftRawArticlesArray) {
 			}
 			
 			article.parent = vizIdProvider('t'+ftArticle.field_field_tool_category[0].raw.tid);				
+			article.parentname = ftArticle.field_field_tool_category[0].raw.taxonomy_term.name;
 		}
 		
 		articles.push(article);
