@@ -1,3 +1,4 @@
+
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "padding": 5,
@@ -366,7 +367,15 @@
               "value": "black"
             }
           ]
+        },
+        "hover":
+        {
+          "cursor":
+          {
+            "value": "pointer"
+          }
         }
+
       }
     },
     {
@@ -485,7 +494,7 @@
       "stroke": "cat_color",
       "orient": "bottom-left",
       "title": "Kategorie",
-      "symbolType": "stroke",
+      "symbolType": "circle",
       "symbolOpacity": 0.6
     }
   ]
