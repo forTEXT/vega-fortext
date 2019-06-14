@@ -56,6 +56,15 @@ function injectData(vegaSpec, ftRawArticlesArray) {
 		article.name = ftArticle.node_title;
 		article.id = vizIdProvider('n'+ftArticle.nid);
 		article.url =  'https://fortext.net/' + ftArticle._field_data.nid.entity.path.alias;
+		
+		if (ftArticle.field_field_title_short !== undefined 
+			&&  ftArticle.field_field_title_short.length !== 0) {
+			
+			let shortTitle = ftArticle.field_field_title_short[0].raw.value;
+			if (shortTitle !== undefined && shortTitle !== '') {
+				article.name = shortTitle;
+			}
+		}
 
 		// extract and add forTEXT sub categories
 		if (ftArticle.field_field_resource_category.length !== 0) {
