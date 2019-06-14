@@ -20,15 +20,14 @@
     <div id="view"></div>
   </div>
   <script type="text/javascript">
-    var view;
-
     fetch('visualization-edge-bundling.vg.json')
 		.then(res => res.json())
 		.then(spec => loadData(spec))
 		.catch(err => console.error(err));
 
     function loadData(spec) {
-		fetch('data/json_articles_category.json')
+		let baseUrl = window.location.protocol + '//' + window.location.host + '/';
+		fetch(baseUrl + '/api/views/json_articles_category')
 			.then(res => res.json())
 			.then(data => render(data, spec))
 			.catch(err => console.error(err));
@@ -37,7 +36,7 @@
 	function render(data, spec) {
 	  injectData(spec, data.results);
 	  
-      view = new vega.View(vega.parse(spec), {
+      let view = new vega.View(vega.parse(spec), {
         renderer:  'canvas',  // renderer (canvas or svg)
         container: '#view',   // parent DOM container
         hover:     true       // enable hover processing

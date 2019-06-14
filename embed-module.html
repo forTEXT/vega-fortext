@@ -5,6 +5,8 @@
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@3"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@4"></script>
+  <script src="datamanagement.js"></script>
+
   <title>Vega / forTEXT: Vega Embed</title>
 </head>
 <body>
@@ -20,9 +22,26 @@
     <div id="view"></div>
   </div>
   <script>
-    vegaEmbed(
-      '#view',
-      'visualization-edge-bundling.vg.json'
-    );
+    fetch('visualization-edge-bundling.vg.json')
+		.then(res => res.json())
+		.then(spec => loadData(spec))
+		.catch(err => console.error(err));
+
+    function loadData(spec) {
+		let baseUrl = window.location.protocol + '//' + window.location.host + '/';
+		fetch(baseUrl + '/api/views/json_articles_category')
+			.then(res => res.json())
+			.then(data => render(data, spec))
+			.catch(err => console.error(err));
+	}
+
+	function render(data, spec) {
+      injectData(spec, data.results);
+	  vegaEmbed(
+	    '#view',
+	    spec
+	  );	  
+    }  
+
   </script>
 </body>

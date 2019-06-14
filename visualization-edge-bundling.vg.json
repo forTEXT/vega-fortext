@@ -2,8 +2,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "padding": 5,
-  "width": 790,
-  "height": 820,
+  "width": 770,
+  "height": 720,
   "autosize": "none",
   "signals": [
     {
@@ -19,7 +19,7 @@
     },
     {
       "name": "radius",
-      "value": 100,
+      "value": 99,
       "bind":
       {
         "input": "range",
@@ -33,7 +33,14 @@
     },
     {
       "name": "rotate",
-      "value": 0
+      "value": 0,
+      "bind":
+      {
+        "input": "range",
+        "min": -10,
+        "max": 360,
+        "step": 1
+      }
     },
     {
       "name": "textSize",
@@ -48,7 +55,7 @@
     },
     {
       "name": "textOffset",
-      "value": 2,
+      "value": 8,
       "bind":
       {
         "input": "range",
@@ -93,15 +100,29 @@
     },
     {
       "name": "startAngle",
-      "value": 0
+      "value": 0,
+      "bind":
+      {
+        "input": "range",
+        "min": 0,
+        "max": 7.29,
+        "step": 0.01
+      }
     },
     {
       "name": "endAngle",
-      "value": 6.29
+      "value": 6.29,
+      "bind":
+      {
+        "input": "range",
+        "min": 0,
+        "max": 7.29,
+        "step": 0.01
+      }
     },
     {
       "name": "innerRadius",
-      "value": 98,
+      "value": 99,
       "bind":
       {
         "input": "range",
@@ -112,7 +133,7 @@
     },
     {
       "name": "outerRadius",
-      "value": 390,
+      "value": 103,
       "bind":
       {
         "input": "range",
@@ -168,6 +189,11 @@
           "type": "formula",
           "expr": "originY + radius * datum.beta * sin(PI * datum.angle / 180)",
           "as": "y"
+        },
+        {
+          "type": "formula",
+          "expr": "2*PI*datum.alpha",
+          "as": "rangle"
         }
       ]
     },
@@ -178,32 +204,6 @@
         {
           "type": "filter",
           "expr": "!datum.children"
-        }
-      ]
-    },
-    {
-      "name": "count_by_direct_categories",
-      "source": "tree",
-      "transform": [
-        {
-          "type": "filter",
-          "expr": "datum.parent > 3"
-        },
-        {
-          "type": "aggregate",
-          "groupby": ["parentname"]
-        },
-        {
-          "type": "pie",
-          "field": "count",
-          "startAngle":
-          {
-            "signal": "startAngle"
-          },
-          "endAngle":
-          {
-            "signal": "endAngle"
-          }
         }
       ]
     },
@@ -235,7 +235,7 @@
       "type": "arc",
       "from":
       {
-        "data": "count_by_direct_categories"
+        "data": "leaves"
       },
       "encode":
       {
@@ -246,6 +246,14 @@
             "scale": "cat_color",
             "field": "parentname"
           },
+          "fillOpacity":
+          {
+            "value": 0.6
+          },
+          "padAngle":
+          {
+            "value": 0
+          },
           "x":
           {
             "signal": "width / 2"
@@ -253,25 +261,17 @@
           "y":
           {
             "signal": "height / 2"
-          },
-          "fillOpacity":
-          {
-            "value": 0.6
-          },
-          "padAngle":
-          {
-            "value": 0.02
           }
         },
         "update":
         {
           "startAngle":
           {
-            "field": "startAngle"
+            "signal": "datum.rangle-0.075"
           },
           "endAngle":
           {
-            "field": "endAngle"
+            "signal": "datum.rangle+0.075"
           },
           "innerRadius":
           {
@@ -284,6 +284,10 @@
           "cornerRadius":
           {
             "value": "0"
+          },
+          "tooltip":
+          {
+            "field": "parentname"
           }
         }
       }
@@ -474,7 +478,7 @@
       "type": "ordinal",
       "domain":
       {
-        "data": "count_by_direct_categories",
+        "data": "leaves",
         "field": "parentname"
       },
       "range":

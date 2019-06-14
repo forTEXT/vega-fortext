@@ -56,9 +56,9 @@ function injectData(vegaSpec, ftRawArticlesArray) {
 		article.name = ftArticle.node_title;
 		article.id = vizIdProvider('n'+ftArticle.nid);
 		article.url =  'https://fortext.net/' + ftArticle._field_data.nid.entity.path.alias;
-		
+
 		// extract and add forTEXT sub categories
-		if (ftArticle.field_field_resource_category.length != 0) {
+		if (ftArticle.field_field_resource_category.length !== 0) {
 			// add Ressource's sub category if it hasn't been added yet
 			if (!ftIdToVizId.has('t'+ftArticle.field_field_resource_category[0].raw.tid)) {
 				let resourceCategory = {
@@ -72,7 +72,7 @@ function injectData(vegaSpec, ftRawArticlesArray) {
 			article.parent = vizIdProvider('t'+ftArticle.field_field_resource_category[0].raw.tid);
 			article.parentname = ftArticle.field_field_resource_category[0].raw.taxonomy_term.name;
 		}
-		else if (ftArticle.field_field_routine_category.length != 0) {
+		else if (ftArticle.field_field_routine_category.length !== 0) {
 			// add Routine's sub category if it hasn't been added yet
 			if (!ftIdToVizId.has('t'+ftArticle.field_field_routine_category[0].raw.tid)) {
 				let resourceCategory = {
@@ -86,7 +86,7 @@ function injectData(vegaSpec, ftRawArticlesArray) {
 			article.parent = vizIdProvider('t'+ftArticle.field_field_routine_category[0].raw.tid);		
 			article.parentname = ftArticle.field_field_routine_category[0].raw.taxonomy_term.name;
 		}
-		else if (ftArticle.field_field_tool_category.length != 0) {
+		else if (ftArticle.field_field_tool_category.length !== 0) {
 			// add Tool's sub category if it hasn't been added yet			
 			if (!ftIdToVizId.has('t'+ftArticle.field_field_tool_category[0].raw.tid)) {
 				let resourceCategory = {
@@ -100,13 +100,29 @@ function injectData(vegaSpec, ftRawArticlesArray) {
 			article.parent = vizIdProvider('t'+ftArticle.field_field_tool_category[0].raw.tid);				
 			article.parentname = ftArticle.field_field_tool_category[0].raw.taxonomy_term.name;
 		}
+		else if (ftArticle.field_field_video_category.length !== 0) { // Video Ressources
+			// add Ressource's sub category if it hasn't been added yet
+			if (!ftIdToVizId.has('t'+ftArticle.field_field_video_category[0].raw.tid)) {
+				let resourceCategory = {
+					'name' : ftArticle.field_field_video_category[0].raw.taxonomy_term.name,
+					'id' : vizIdProvider('t'+ftArticle.field_field_video_category[0].raw.tid),
+					'parent' : ftIdToVizId.get('Ressourcen')
+				}
+				articles.push(resourceCategory);
+			}
+			
+			article.parent = vizIdProvider('t'+ftArticle.field_field_video_category[0].raw.tid);
+			article.parentname = ftArticle.field_field_video_category[0].raw.taxonomy_term.name;
+		}
 		
 		articles.push(article);
 		
 		// handle relations between articles
-		if (!Array.isArray(ftArticle._field_data.nid.entity.field_related_content)) {
+		if (ftArticle._field_data.nid.entity.field_related_content !== undefined 
+			&& !Array.isArray(ftArticle._field_data.nid.entity.field_related_content)) {
+			
 			ftArticle._field_data.nid.entity.field_related_content.und.forEach(function(target) {
-				if (ftIdToVizId.has('n'+target.nid)) { //there is some related content that does not appear as an article
+				if (ftIdToVizId.has('n'+target.nid)) { //there might be some related content that does not appear as an article
 					let relation = {
 						'source' : vizIdProvider('n'+ftArticle.nid),
 						'target' : vizIdProvider('n'+target.nid)
@@ -117,7 +133,9 @@ function injectData(vegaSpec, ftRawArticlesArray) {
 			});
 		}
 	});
-	
+	// articles.sort(function(a, b) {
+		// return a.id - b.id;
+	// });
 	console.log(articles);
 	console.log(relations);
 	
