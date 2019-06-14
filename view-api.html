@@ -27,7 +27,7 @@
 
     function loadData(spec) {
 		let baseUrl = window.location.protocol + '//' + window.location.host + '/';
-		fetch(baseUrl + '/api/views/json_articles_category')
+		fetch(baseUrl + 'vega-fortext/api/views/json_articles_category')
 			.then(res => res.json())
 			.then(data => render(data, spec))
 			.catch(err => console.error(err));
