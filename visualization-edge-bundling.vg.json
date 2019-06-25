@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "padding": 0,
   "width": 550,
-  "height": 670,
+  "height": 680,
   "background": "white",
   "autosize": 
     {
@@ -428,6 +428,11 @@
       {
         "scheme": "set1"
       }
+    },
+    {
+      "name": "opacity",
+      "type": "linear",
+      "range": [0.6, 0.6]
     }
   ],
   "legends": [
@@ -446,7 +451,9 @@
       "symbolType": "circle",
       "symbolOpacity": 0.6,
       "legendX": 400,
-      "legendY": 565
+      "legendY": 565,
+      "fill": "cat_color",
+      "opacity": "opacity"
     }
   ]
 }
