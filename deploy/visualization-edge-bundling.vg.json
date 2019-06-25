@@ -1,10 +1,15 @@
-
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
-  "padding": 5,
-  "width": 770,
-  "height": 720,
-  "autosize": "none",
+  "padding": 0,
+  "width": 550,
+  "height": 670,
+  "background": "white",
+  "autosize": 
+    {
+      "type": "none", 
+      "resize": false,
+      "contains": "padding"
+    },  
   "signals": [
     {
       "name": "tension",
@@ -48,7 +53,7 @@
     },
     {
       "name": "originY",
-      "update": "height / 2"
+      "update": "height / 2 - 100"
     },
     {
       "name": "active",
@@ -194,11 +199,11 @@
           },
           "x":
           {
-            "signal": "width / 2"
+            "signal": "originX"
           },
           "y":
           {
-            "signal": "height / 2"
+            "signal": "originY"
           }
         },
         "update":
@@ -428,16 +433,20 @@
   "legends": [
     {
       "stroke": "color",
-      "orient": "bottom-right",
+      "orient": "none",
       "title": "Verwandte Beiträge",
-      "symbolType": "stroke"
+      "symbolType": "stroke",
+      "legendX": 10,
+      "legendY": 565 
     },
     {
       "stroke": "cat_color",
-      "orient": "bottom-left",
+      "orient": "none",
       "title": "Kategorie",
       "symbolType": "circle",
-      "symbolOpacity": 0.6
+      "symbolOpacity": 0.6,
+      "legendX": 400,
+      "legendY": 565
     }
   ]
 }
