@@ -52,10 +52,11 @@ function injectData(vegaSpec, ftRawArticlesArray) {
 	// loop forTEXT site data and extract articles and relations between articles
 	ftRawArticlesArray.forEach(function(ftArticle) {
 		let article = {};
+		let baseUrl = 'https://fortext.net/';
 		
 		article.name = ftArticle.node_title;
 		article.id = vizIdProvider('n'+ftArticle.nid);
-		article.url =  'https://fortext.net/' + ftArticle._field_data.nid.entity.path.alias;
+		article.url =  baseUrl + ftArticle._field_data.nid.entity.path.alias;
 		
 		if (ftArticle.field_field_title_short !== undefined 
 			&&  ftArticle.field_field_title_short.length !== 0) {
@@ -80,6 +81,7 @@ function injectData(vegaSpec, ftRawArticlesArray) {
 			
 			article.parent = vizIdProvider('t'+ftArticle.field_field_resource_category[0].raw.tid);
 			article.parentname = ftArticle.field_field_resource_category[0].raw.taxonomy_term.name;
+			article.parenturl = baseUrl + ftArticle.field_field_resource_category[0].raw.taxonomy_term.path.alias;
 		}
 		else if (ftArticle.field_field_routine_category.length !== 0) {
 			// add Routine's sub category if it hasn't been added yet
@@ -87,13 +89,14 @@ function injectData(vegaSpec, ftRawArticlesArray) {
 				let resourceCategory = {
 					'name' : ftArticle.field_field_routine_category[0].raw.taxonomy_term.name,
 					'id' : vizIdProvider('t'+ftArticle.field_field_routine_category[0].raw.tid),
-					'parent' : ftIdToVizId.get('Routinen')
+					'parent' : ftIdToVizId.get('Routinen')					
 				}
 				articles.push(resourceCategory);
 			}
 			
 			article.parent = vizIdProvider('t'+ftArticle.field_field_routine_category[0].raw.tid);		
 			article.parentname = ftArticle.field_field_routine_category[0].raw.taxonomy_term.name;
+			article.parenturl = baseUrl + ftArticle.field_field_routine_category[0].raw.taxonomy_term.path.alias;
 		}
 		else if (ftArticle.field_field_tool_category.length !== 0) {
 			// add Tool's sub category if it hasn't been added yet			
@@ -101,13 +104,14 @@ function injectData(vegaSpec, ftRawArticlesArray) {
 				let resourceCategory = {
 					'name' : ftArticle.field_field_tool_category[0].raw.taxonomy_term.name,
 					'id' : vizIdProvider('t'+ftArticle.field_field_tool_category[0].raw.tid),
-					'parent' : ftIdToVizId.get('Tools')
+					'parent' : ftIdToVizId.get('Tools')					
 				}
 				articles.push(resourceCategory);
 			}
 			
 			article.parent = vizIdProvider('t'+ftArticle.field_field_tool_category[0].raw.tid);				
 			article.parentname = ftArticle.field_field_tool_category[0].raw.taxonomy_term.name;
+			article.parenturl = baseUrl + ftArticle.field_field_tool_category[0].raw.taxonomy_term.path.alias;
 		}
 		else if (ftArticle.field_field_video_category.length !== 0) { // Video Ressources
 			// add Ressource's sub category if it hasn't been added yet
@@ -122,6 +126,7 @@ function injectData(vegaSpec, ftRawArticlesArray) {
 			
 			article.parent = vizIdProvider('t'+ftArticle.field_field_video_category[0].raw.tid);
 			article.parentname = ftArticle.field_field_video_category[0].raw.taxonomy_term.name;
+			article.parenturl = baseUrl + ftArticle.field_field_video_category[0].raw.taxonomy_term.path.alias;
 		}
 		
 		articles.push(article);
