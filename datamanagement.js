@@ -136,7 +136,7 @@ function injectData(vegaSpec, ftRawArticlesArray) {
 			&& !Array.isArray(ftArticle._field_data.nid.entity.field_related_content)) {
 			
 			ftArticle._field_data.nid.entity.field_related_content.und.forEach(function(target) {
-				if (ftIdToVizId.has('n'+target.nid)) { //there might be some related content that does not appear as an article
+				if (ftIdToVizId.has('n'+target.nid)) { 
 					let relation = {
 						'source' : vizIdProvider('n'+ftArticle.nid),
 						'target' : vizIdProvider('n'+target.nid)
@@ -147,6 +147,9 @@ function injectData(vegaSpec, ftRawArticlesArray) {
 			});
 		}
 	});
+	
+	//there might be some related content that does not appear as an article
+	relations = relations.filter(relation => !ftIdToVizId.has(relation.target));
 
 	// console.log(articles);
 	// console.log(relations);
