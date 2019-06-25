@@ -136,20 +136,21 @@ function injectData(vegaSpec, ftRawArticlesArray) {
 			&& !Array.isArray(ftArticle._field_data.nid.entity.field_related_content)) {
 			
 			ftArticle._field_data.nid.entity.field_related_content.und.forEach(function(target) {
-				if (ftIdToVizId.has('n'+target.nid)) { 
-					let relation = {
-						'source' : vizIdProvider('n'+ftArticle.nid),
-						'target' : vizIdProvider('n'+target.nid)
-					}
-					
-					relations.push(relation);
+				let relation = {
+					'source' : vizIdProvider('n'+ftArticle.nid),
+					'target' : vizIdProvider('n'+target.nid)
 				}
+				
+				relations.push(relation);
 			});
 		}
 	});
 	
-	//there might be some related content that does not appear as an article
-	relations = relations.filter(relation => !ftIdToVizId.has(relation.target));
+	 //there might be some related content that does not appear as an article
+	let availableArticleVizIds = new Set();
+	articles.forEach(article => availableArticleVizIds.add(article.id));
+	
+	relations = relations.filter(relation => availableArticleVizIds.has(relation.target));
 
 	// console.log(articles);
 	// console.log(relations);
