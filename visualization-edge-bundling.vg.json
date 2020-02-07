@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "padding": 0,
-  "width": 560,
-  "height": 700,
+  "width": 650,
+  "height": 750,
   "background": "white",
   "autosize": 
     {
@@ -17,7 +17,7 @@
     },
     {
       "name": "radius",
-      "value": 99
+      "value": 135
     },
     {
       "name": "extent",
@@ -79,11 +79,11 @@
     },
     {
       "name": "innerRadius",
-      "value": 99
+      "value": 135
     },
     {
       "name": "outerRadius",
-      "value": 103
+      "value": 139
     }
   ],
   "data": [
@@ -453,7 +453,7 @@
       "title": "Verwandte Beiträge",
       "symbolType": "stroke",
       "legendX": 10,
-      "legendY": 565 
+      "legendY": 585 
     },
     {
       "stroke": "cat_color",
@@ -462,7 +462,7 @@
       "symbolType": "circle",
       "symbolOpacity": 0.6,
       "legendX": 360,
-      "legendY": 565,
+      "legendY": 585,
       "fill": "cat_color",
       "opacity": "opacity",
       "columns": 2
